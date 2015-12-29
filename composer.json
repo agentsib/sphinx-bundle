@@ -1,0 +1,26 @@
+{
+    "name": "agentsib/sphinx-bundle",
+    "description": "Sphinx Bundle for Symfony2",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ilya Kovalenko",
+            "email": "agentsib@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/framework-bundle": "~2.3",
+        "symfony/dependency-injection": "~2.3",
+        "symfony/console": "~2.3",
+        "foolz/sphinxql-query-builder": "~1.0"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {"AgentSIB\\SphinxBundle\\": ""},
+        "exclude-from-classmap": [
+            "Tests/"
+        ]
+    }
+}
