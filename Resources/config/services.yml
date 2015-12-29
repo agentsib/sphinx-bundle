@@ -1,5 +1,7 @@
 parameters:
     agentsib_sphinx.data_collector.class: AgentSIB\SphinxBundle\DataCollector\SphinxDataCollector
+    agentsib_sphinx.drivers.pdo: Foolz\SphinxQL\Drivers\Pdo\Connection
+    agentsib_sphinx.drivers.mysqli: Foolz\SphinxQL\Drivers\Mysqli\Connection
 
 services:
 #    agentsib_sphinx.example:
@@ -15,4 +17,4 @@ services:
     agentsib_sphinx.abstract.connection:
         class: Foolz\SphinxQL\Drivers\Mysqli\Connection
         abstract: true
-        public: true
+        public: false

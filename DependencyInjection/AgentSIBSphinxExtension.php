@@ -26,8 +26,11 @@ class AgentSIBSphinxExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
+        var_dump($config);
+        die();
         foreach ($config['connections'] as $name => $values) {
             $def = new DefinitionDecorator('agentsib_sphinx.abstract.connection');
+            $def->setClass($container->getParameter(sprintf('agentsib_sphinx.drivers.%s', $values['driver'])));
             $def->addMethodCall('setParams', array(
                 array(
                     'host'  =>  $values['host'],
@@ -35,6 +38,7 @@ class AgentSIBSphinxExtension extends Extension
                     'socket' => $values['socket']
                 )
             ));
+            $def->setPublic(true);
             $container->setDefinition(sprintf('agentsib_sphinx.%s.connection', $name), $def);
         }
     }
