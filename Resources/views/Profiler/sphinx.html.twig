@@ -1,0 +1,23 @@
+{% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+
+{% block toolbar %}
+    {% set icon %}
+        <span class="icon">
+            {{ include('AgentSIBSphinxBundle:Profiler:icon.svg.twig') }}
+        </span>
+        <span class="sf-toolbar-status"></span>
+    {% endset %}
+
+    {% set text %}
+        <div class="sf-toolbar-info-piece">
+            <b>Method</b>
+            <span>asdf</span>
+        </div>
+
+        <div class="sf-toolbar-info-piece">
+            <b>Accepted content type</b>
+            <span>asdf</span>
+        </div>
+    {% endset %}
+    {{ include('WebProfilerBundle:Profiler:toolbar_item.html.twig', { link: true }) }}
+{% endblock %}

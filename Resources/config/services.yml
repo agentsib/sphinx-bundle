@@ -1,4 +1,18 @@
+parameters:
+    agentsib_sphinx.data_collector.class: AgentSIB\SphinxBundle\DataCollector\SphinxDataCollector
+
 services:
 #    agentsib_sphinx.example:
 #        class: AgentSIB\SphinxBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
+
+    agentsib_sphinx.data_collector:
+        class: %agentsib_sphinx.data_collector.class%
+        public: false
+        tags:
+            - { name: data_collector, template: AgentSIBSphinxBundle:Profiler:sphinx, id: agentsib_sphinx }
+
+    agentsib_sphinx.abstract.connection:
+        class: Foolz\SphinxQL\Drivers\Mysqli\Connection
+        abstract: true
+        public: true

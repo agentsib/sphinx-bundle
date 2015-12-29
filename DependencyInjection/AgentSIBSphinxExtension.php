@@ -4,6 +4,7 @@ namespace AgentSIB\SphinxBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
@@ -24,6 +25,18 @@ class AgentSIBSphinxExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        foreach ($config['connections'] as $name => $values) {
+            $def = new DefinitionDecorator('agentsib_sphinx.abstract.connection');
+            $def->addMethodCall('setParams', array(
+                array(
+                    'host'  =>  $values['host'],
+                    'port'  =>  $values['port'],
+                    'socket' => $values['socket']
+                )
+            ));
+            $container->setDefinition(sprintf('agentsib_sphinx.%s.connection', $name), $def);
+        }
     }
 
     public function getAlias()
