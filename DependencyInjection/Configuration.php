@@ -22,8 +22,15 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->beforeNormalization()
-                ->ifTrue()
-                ->then(function ($v) { return isset($v[0])?array('default' => $v[0]):$v; })
+                ->ifTrue(function ($v) { return is_array($v) && !array_key_exists('connections', $v) && array_key_exists('connection', $v); })
+                ->then(function($v) {
+                    $connection = $v['connection'];
+
+                    $v['default_connection'] = isset($v['default_connection']) ? (string) $v['default_connection'] : 'default';
+                    $v['connections'] = array($v['default_connection'] => $connection);
+
+                    return $v;
+                })
             ->end()
             ->fixXmlConfig('connection')
             ->children()
@@ -31,7 +38,6 @@ class Configuration implements ConfigurationInterface
                     ->useAttributeAsKey('name', true)
                     ->requiresAtLeastOneElement()
                     ->prototype('array')
-
                     ->children()
                         ->scalarNode('driver')
                             ->defaultValue('pdo')
@@ -40,17 +46,17 @@ class Configuration implements ConfigurationInterface
                                 ->thenInvalid('Driver not support')
                             ->end()
                         ->end()
-                        ->scalarNode('host')->end()
+                        ->scalarNode('host')->defaultValue('localhost')->end()
                         ->integerNode('port')
-                            ->max(65000)
+                            ->max(65535)
                             ->min(0)
-                            ->defaultNull()
+                            ->defaultValue(9306)
                         ->end()
                     ->scalarNode('socket')->defaultNull()->end()
                     ->end()
                 ->end()
             ->end()
-            ->scalarNode('default_connection')->end()
+            ->scalarNode('default_connection')->defaultValue('default')->end()
         ;
 
         return $treeBuilder;

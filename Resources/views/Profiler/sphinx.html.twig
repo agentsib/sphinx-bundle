@@ -4,11 +4,11 @@
     {% set icon %}
         <span class="icon">
             {{ include('AgentSIBSphinxBundle:Profiler:icon.svg.twig') }}
+            <span class="sf-toolbar-ajax-requests sf-toolbar-status sf-toolbar-status-green">{{ collector.queriesCount }}</span>
         </span>
-        <span class="sf-toolbar-status"></span>
     {% endset %}
 
-    {% set text %}
+    {% set text2 %}
         <div class="sf-toolbar-info-piece">
             <b>Method</b>
             <span>asdf</span>
@@ -19,5 +19,7 @@
             <span>asdf</span>
         </div>
     {% endset %}
-    {{ include('WebProfilerBundle:Profiler:toolbar_item.html.twig', { link: true }) }}
+    {% if collector.queriesCount %}
+        {{ include('WebProfilerBundle:Profiler:toolbar_item.html.twig', { link: false }) }}
+    {% endif %}
 {% endblock %}

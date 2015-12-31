@@ -1,7 +1,7 @@
 parameters:
     agentsib_sphinx.data_collector.class: AgentSIB\SphinxBundle\DataCollector\SphinxDataCollector
-    agentsib_sphinx.drivers.pdo: Foolz\SphinxQL\Drivers\Pdo\Connection
-    agentsib_sphinx.drivers.mysqli: Foolz\SphinxQL\Drivers\Mysqli\Connection
+    agentsib_sphinx.connection.class: AgentSIB\SphinxBundle\Model\SphinxQLConnection
+    agentsib_sphinx.helper.class: Foolz\SphinxQL\Helper
 
 services:
 #    agentsib_sphinx.example:
@@ -10,11 +10,15 @@ services:
 
     agentsib_sphinx.data_collector:
         class: %agentsib_sphinx.data_collector.class%
+        arguments: [@agentsib_sphinx.logger]
         public: false
         tags:
             - { name: data_collector, template: AgentSIBSphinxBundle:Profiler:sphinx, id: agentsib_sphinx }
 
-    agentsib_sphinx.abstract.connection:
-        class: Foolz\SphinxQL\Drivers\Mysqli\Connection
-        abstract: true
+    agentsib_sphinx.logger:
+        class: AgentSIB\SphinxBundle\Model\SphinxLogger
+        public: false
+
+    agentsib_sphinx.factory.helper:
+        class: %agentsib_sphinx.helper.class%
         public: false
