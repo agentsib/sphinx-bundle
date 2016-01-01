@@ -10,7 +10,11 @@ class AgentSIBSphinxBundle extends Bundle
     public function getContainerExtension()
     {
         if (null === $this->extension) {
-            $class = $this->getContainerExtensionClass();
+
+            $basename = preg_replace('/Bundle$/', '', $this->getName());
+
+            $class = $this->getNamespace().'\\DependencyInjection\\'.$basename.'Extension';
+
             if (class_exists($class)) {
                 $extension = new $class();
 
