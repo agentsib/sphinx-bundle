@@ -55,6 +55,7 @@ class AgentSIBSphinxExtension extends Extension
             $helperDef->setFactoryClass($container->getParameter('agentsib_sphinx.helper.class'));
             $helperDef->setFactoryMethod('create');
             $helperDef->addArgument(new Reference(sprintf('agentsib_sphinx.%s.connection', $name)));
+            $helperDef->setPublic(true);
             $container->setDefinition(sprintf('agentsib_sphinx.%s.helper', $name), $helperDef);
 
 
