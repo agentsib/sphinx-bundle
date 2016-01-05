@@ -7,19 +7,7 @@
             <span class="sf-toolbar-ajax-requests sf-toolbar-status sf-toolbar-status-green">{{ collector.queriesCount }}</span>
         </span>
     {% endset %}
-
-    {% set text2 %}
-        <div class="sf-toolbar-info-piece">
-            <b>Method</b>
-            <span>asdf</span>
-        </div>
-
-        <div class="sf-toolbar-info-piece">
-            <b>Accepted content type</b>
-            <span>asdf</span>
-        </div>
-    {% endset %}
-    {% if collector.queriesCount %}
+    {% if collector.queriesCount and false %}
         {{ include('WebProfilerBundle:Profiler:toolbar_item.html.twig', { link: false }) }}
     {% endif %}
 {% endblock %}
