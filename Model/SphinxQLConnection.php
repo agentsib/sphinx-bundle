@@ -68,6 +68,10 @@ class SphinxQLConnection implements SphinxQLConnectionInterface
             $this->logger->logQuery($query, 0, $this->alias, $exception?$exception->getMessage():false);
         }
 
+        if ($exception) {
+            throw $exception;
+        }
+
         return $result;
     }
 
